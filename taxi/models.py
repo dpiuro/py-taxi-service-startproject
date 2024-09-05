@@ -4,18 +4,7 @@ from django.db import models
 
 class Driver(AbstractUser):
     license_number = models.CharField(max_length=20, unique=True)
-
-    groups = models.ManyToManyField(
-        "auth.Group",
-        related_name="driver_set",
-        blank=True,
-    )
-
-    user_permissions = models.ManyToManyField(
-        "auth.Permission", related_name="driver_permissions_set", blank=True
-    )
-
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.username} ({self.license_number})"
 
 
@@ -23,7 +12,7 @@ class Manufacturer(models.Model):
     name = models.CharField(max_length=255, unique=True)
     country = models.CharField(max_length=255)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -34,5 +23,5 @@ class Car(models.Model):
     )
     drivers = models.ManyToManyField(Driver, related_name="cars")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.model} ({self.manufacturer.name})"
